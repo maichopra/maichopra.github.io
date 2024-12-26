@@ -1,0 +1,109 @@
+---
+title: PAC CLI - Export Solution
+description: This guide explains how to export both managed and unmanaged solutions from Microsoft Dataverse using the Power Platform Command Line Interface (PAC CLI) and then unpack the solution for version control or further development.
+lastUpdated: 2024-12-26
+tags: ["Dataverse"]
+---
+
+## Prerequisites
+
+1. Install the [Power Platform CLI](https://learn.microsoft.com/en-us/power-platform/developer/cli/install).
+2. Ensure you have access to an environment in Microsoft Dataverse with the necessary permissions to export solutions.
+3. Authenticate to your environment using `pac auth create`.
+
+## Steps to Export a Solution
+
+### Exporting an Unmanaged Solution
+
+1. **Authenticate to your Dataverse environment:**
+
+   ```bash
+   pac auth create --url https://your-org.crm.dynamics.com
+   ```
+
+2. **Export the unmanaged solution:**
+
+   ```bash
+   pac solution export --name "<SolutionName>" --path "./solutions" --managed false
+   ```
+
+   - Replace `<SolutionName>` with the name of your solution.
+   - The `--managed false` flag ensures that the solution is exported as unmanaged.
+
+3. **Verify the solution file:**
+   After export, you should see a ZIP file named `<SolutionName>_Unmanaged.zip` in the specified path.
+
+### Exporting a Managed Solution
+
+1. **Authenticate to your Dataverse environment:**
+   If you have already authenticated, skip this step.
+
+2. **Export the managed solution:**
+
+   ```bash
+   pac solution export --name "<SolutionName>" --path "./solutions" --managed true
+   ```
+
+   - Replace `<SolutionName>` with the name of your solution.
+   - The `--managed true` flag ensures that the solution is exported as managed.
+
+3. **Verify the solution file:**
+   After export, you should see a ZIP file named `<SolutionName>_Managed.zip` in the specified path.
+
+## Unpacking the Solution
+
+To enable version control or inspect the contents of the solution, you can unpack it using the `pac solution unpack` command.
+
+1. **Create a folder for unpacking:**
+
+   ```bash
+   mkdir ./unpacked-solution
+   ```
+
+2. **Unpack the solution:**
+
+   ```bash
+   pac solution unpack --zipfile "./solutions/<SolutionName>_Unmanaged.zip" --folder "./unpacked-solution"
+   ```
+
+   - Replace `<SolutionName>` with the name of your solution.
+
+3. **Review the unpacked files:**
+   The unpacked files will be organized in the folder you specified, typically including:
+   - `Customizations.xml`
+   - Component folders (e.g., `Entities`, `WebResources`)
+
+## Additional Commands
+
+- **Authenticate to a new environment:**
+
+  ```bash
+  pac auth create --url https://new-org.crm.dynamics.com
+  ```
+
+- **List available solutions in the environment:**
+
+  ```bash
+  pac solution list
+  ```
+
+- **Pack the unpacked solution back into a ZIP file:**
+  ```bash
+  pac solution pack --folder "./unpacked-solution" --zipfile "./solutions/<SolutionName>.zip"
+  ```
+
+## Best Practices
+
+- Always export and store both managed and unmanaged versions of your solutions.
+- Use version control systems (e.g., Git) to manage unpacked solutions.
+- Ensure solution files are named with version numbers or timestamps to track changes.
+
+## Troubleshooting
+
+- **Authentication Issues:** Ensure the correct URL and permissions are used. Run `pac auth list` to check active sessions.
+- **Export Errors:** Verify that the solution name matches exactly and that you have appropriate permissions.
+- **Unpack Errors:** Ensure the ZIP file path is correct and the destination folder exists.
+
+## References
+
+- [PAC CLI Documentation](https://learn.microsoft.com/en-us/power-platform/developer/cli/introduction)

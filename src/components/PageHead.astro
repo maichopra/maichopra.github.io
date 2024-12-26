@@ -1,0 +1,26 @@
+---
+import type { Props } from "@astrojs/starlight/props";
+import Default from "@astrojs/starlight/components/PageTitle.astro";
+import { Badge } from "@astrojs/starlight/components";
+
+const { tags } = Astro.props.entry.data;
+
+const tagVariants: Record<
+  string,
+  "note" | "danger" | "success" | "caution" | "tip" | "default"
+> = {
+  Dataverse: "success",
+  "Power Pages": "tip",
+  "Power BI": "caution",
+};
+---
+
+<Default {...Astro.props}>
+  <slot />
+</Default>
+{
+  tags != null &&
+    tags.map((tag: string) => (
+      <Badge text={tag} variant={tagVariants[tag] || "default"} />
+    ))
+}

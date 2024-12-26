@@ -8,6 +8,10 @@ export default defineConfig({
   integrations: [
     starlight({
       title: "J.A.C.K Blog",
+      components: {
+        // Override the default `PageTitle` component.
+        PageTitle: "./src/components/PageHead.astro",
+      },
       social: {
         github: "https://github.com/maichopra",
       },

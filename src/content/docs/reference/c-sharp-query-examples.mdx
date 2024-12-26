@@ -1,0 +1,174 @@
+---
+title: C# Query Examples
+description: In Dynamics 365, querying data using C# can be achieved using the `IOrganizationService` interface or the `XrmTooling` framework. This article provides examples for common query scenarios, including filtering, ordering, retrieving single or multiple records, and querying related records.
+tags: ["Technical", "Dataverse"]
+---
+
+## Prerequisites
+
+Ensure you have:
+
+- Dynamics 365 SDK libraries installed.
+- A connection to your Dynamics 365 instance using `IOrganizationService`.
+
+## Query Methods Overview
+
+- **QueryExpression**: Provides a structured approach to querying data.
+- **LINQ Queries**: Use LINQ syntax for querying.
+- **FetchXML**: A query language for Dynamics 365, similar to SQL.
+
+---
+
+## Examples
+
+### 1. Retrieving Records with Filtering
+
+#### QueryExpression
+
+```csharp
+var query = new QueryExpression("account")
+{
+    ColumnSet = new ColumnSet("name", "accountnumber")
+};
+query.Criteria.AddCondition("statecode", ConditionOperator.Equal, 0); // Active accounts
+
+EntityCollection accounts = service.RetrieveMultiple(query);
+foreach (var account in accounts.Entities)
+{
+    Console.WriteLine($"Name: {account["name"]}, Account Number: {account["accountnumber"]}");
+}
+```
+
+#### LINQ
+
+```csharp
+using (var context = new OrganizationServiceContext(service))
+{
+    var accounts = from a in context.CreateQuery("account")
+                   where (int)a["statecode"] == 0
+                   select new { Name = a["name"], AccountNumber = a["accountnumber"] };
+
+    foreach (var account in accounts)
+    {
+        Console.WriteLine($"Name: {account.Name}, Account Number: {account.AccountNumber}");
+    }
+}
+```
+
+### 2. Ordering Records
+
+#### QueryExpression
+
+```csharp
+query.AddOrder("name", OrderType.Ascending);
+EntityCollection orderedAccounts = service.RetrieveMultiple(query);
+```
+
+#### LINQ
+
+```csharp
+var orderedAccounts = from a in context.CreateQuery("account")
+                      orderby a["name"] ascending
+                      select a;
+```
+
+### 3. Retrieving a Single Record
+
+#### Using `Retrieve`
+
+```csharp
+Entity account = service.Retrieve("account", accountId, new ColumnSet("name", "accountnumber"));
+Console.WriteLine($"Name: {account["name"]}, Account Number: {account["accountnumber"]}");
+```
+
+#### LINQ
+
+```csharp
+var singleAccount = context.CreateQuery("account")
+                            .FirstOrDefault(a => a.Id == accountId);
+```
+
+### 4. Retrieving Multiple Records (Array)
+
+#### QueryExpression
+
+```csharp
+var query = new QueryExpression("contact")
+{
+    ColumnSet = new ColumnSet("firstname", "lastname")
+};
+EntityCollection contacts = service.RetrieveMultiple(query);
+
+var contactArray = contacts.Entities.Select(e => new
+{
+    FirstName = e["firstname"],
+    LastName = e["lastname"]
+}).ToArray();
+```
+
+### 5. Querying Related Records
+
+#### Parent Record (Many-to-One)
+
+```csharp
+var contact = service.Retrieve("contact", contactId, new ColumnSet("fullname", "parentcustomerid"));
+if (contact.Contains("parentcustomerid"))
+{
+    var parentAccount = (EntityReference)contact["parentcustomerid"];
+    Console.WriteLine($"Parent Account: {parentAccount.Name}");
+}
+```
+
+#### Child Records (One-to-Many)
+
+```csharp
+var query = new QueryExpression("contact")
+{
+    ColumnSet = new ColumnSet("fullname"),
+    Criteria = new FilterExpression()
+};
+query.Criteria.AddCondition("parentcustomerid", ConditionOperator.Equal, accountId);
+EntityCollection childContacts = service.RetrieveMultiple(query);
+
+foreach (var contact in childContacts.Entities)
+{
+    Console.WriteLine($"Contact Name: {contact["fullname"]}");
+}
+```
+
+### 6. FetchXML Example
+
+```csharp
+string fetchXml = @"
+<fetch top="5">
+  <entity name="account">
+    <attribute name="name" />
+    <attribute name="accountnumber" />
+    <filter>
+      <condition attribute="statecode" operator="eq" value="0" />
+    </filter>
+  </entity>
+</fetch>";
+
+EntityCollection accounts = service.RetrieveMultiple(new FetchExpression(fetchXml));
+foreach (var account in accounts.Entities)
+{
+    Console.WriteLine($"Name: {account["name"]}, Account Number: {account["accountnumber"]}");
+}
+```
+
+---
+
+## Best Practices
+
+1. **Minimize Columns**: Use `ColumnSet` to retrieve only necessary fields.
+2. **Paginate Large Datasets**: Use paging for large result sets to avoid timeout issues.
+3. **Use LINQ for Readability**: LINQ is often more readable than `QueryExpression`.
+4. **FetchXML for Complex Queries**: Use FetchXML for queries involving aggregates or advanced filtering.
+
+---
+
+## References
+
+- [QueryExpression Documentation](https://learn.microsoft.com/en-us/power-apps/developer/data-platform/org-service/queryexpression/overview)
+- [FetchXML Documentation](https://learn.microsoft.com/en-us/power-apps/developer/data-platform/fetchxml/overview)

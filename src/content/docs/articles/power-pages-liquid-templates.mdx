@@ -5,19 +5,15 @@ lastUpdated: 2024-12-24
 tags: ["Power Pages"]
 ---
 
-import { Badge } from "@astrojs/starlight/components";
-
-<Badge text="Power Pages" variant="tip" />
-
 Power Pages is a powerful platform for creating low-code websites. One of its standout features is **Liquid templates**, a flexible templating language that enables dynamic content generation. In this post, we’ll explore how to use Liquid in Power Pages for various scenarios, including content management, data fetching, and conditional logic.
 
-### What Are Liquid Templates?
+## What Are Liquid Templates?
 
 Liquid is a simple templating language used to enhance dynamic content in Power Pages. It allows you to inject data from your Dataverse, apply logic, and create reusable components for your pages.
 
-### Key Uses of Liquid Templates
+## Key Uses of Liquid Templates
 
-#### 1. Displaying Content
+### 1. Displaying Content
 
 You can use Liquid to render static or dynamic content seamlessly:
 
@@ -28,7 +24,7 @@ You can use Liquid to render static or dynamic content seamlessly:
 
 This pulls the logged-in user's full name and displays the current date.
 
-#### 2. Fetching Data
+### 2. Fetching Data
 
 Liquid makes it easy to query data from Dataverse:
 
@@ -49,9 +45,9 @@ Liquid makes it easy to query data from Dataverse:
 </ul>
 ```
 
-This example retrieves the 5 most recently created contacts and displays their names in a list.
+This example retrieves the 5 most recently created contacts and displays their names in a list using a FetchXML query.
 
-#### 3. Using Conditional Logic
+### 3. Using Conditional Logic
 
 Add conditional logic to make your pages dynamic:
 
@@ -65,7 +61,7 @@ Add conditional logic to make your pages dynamic:
 
 This checks if a user is logged in and displays appropriate messages.
 
-### Why Use Liquid Templates in Power Pages?
+## Why Use Liquid Templates in Power Pages?
 
 - **Dynamic Content:** Tailor your pages to individual users or scenarios.
 - **Seamless Data Integration:** Fetch and display Dataverse data with ease.
