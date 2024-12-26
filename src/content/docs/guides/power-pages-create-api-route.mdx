@@ -1,0 +1,125 @@
+---
+title: Create API Routes in Power Pages
+description: Learn how to build an API route in Power Pages for dynamic FetchXML queries while ensuring security.
+tags: ["Power Pages", "Technical"]
+lastUpdated: 2024-12-26
+---
+
+import { Badge } from "@astrojs/starlight/components";
+import { Steps } from "@astrojs/starlight/components";
+import { Code } from "@astrojs/starlight/components";
+
+<Badge text="Power Pages" variant="tip" />
+<Badge text="Technical" variant="default" />
+
+Creating custom API routes in Power Pages allows you to build dynamic, data-driven web experiences. In this guide, we'll create an API route that accepts a search term (like a GUID or string) via the URL, executes a FetchXML query dynamically, and returns the results. We’ll leverage **Liquid Code**, **Web Templates**, and **JavaScript** to achieve this.
+
+---
+
+### Step 1: Define the API Endpoint with Web Templates
+
+Power Pages supports **Web Templates**, which are excellent for creating custom API-like responses.
+
+<Steps>
+  1. Navigate to **Portals Management App** and create a new **Web Template**.
+  2. Use Liquid to process URL parameters and execute FetchXML queries. Here's
+  an example template:
+</Steps>
+
+import importedCode from "/src/content/code/api-route-liquid-template.html?raw";
+
+<Code code={importedCode} lang="html" title="webtemplate.html" />
+
+```liquid
+{% assign searchTerm = request.params['search'] | url_decode %}
+
+{% if searchTerm %}
+  {% capture fetchXml %}
+    <fetch top="10">
+      <entity name="contact">
+        <attribute name="fullname" />
+        <filter>
+          <condition attribute="fullname" operator="like" value="%{{ searchTerm | escape }}%" />
+        </filter>
+      </entity>
+    </fetch>
+  {% endcapture %}
+
+  {% fetchxml contacts fetchXml %}
+
+  {
+    "results": [
+      {% for contact in contacts.entities %}
+        {
+          "fullname": "{{ contact.fullname | json_escape }}"
+        }{% if forloop.last == false %},{% endif %}
+      {% endfor %}
+    ]
+  }
+{% else %}
+  { "error": "Missing or invalid search term" }
+{% endif %}
+```
+
+This template:
+
+- Accepts a `search` parameter from the URL.
+- Escapes the input using `| escape` to prevent injection attacks.
+- Executes a FetchXML query for `contact` records matching the search term.
+- Returns JSON-encoded results.
+
+Save the Web Template and associate it with a Page Template and a Web Page to define its endpoint, e.g., `/api/search`.
+
+### Step 2: Test the API
+
+You can test your endpoint using a browser or tools like Postman. For example, if your API is hosted at `https://example.powerappsportals.com/api/search`, you can append a query parameter like:
+
+```
+https://example.powerappsportals.com/api/search?search=John
+```
+
+### Step 3: Use JavaScript to Call the API
+
+To fetch and display data dynamically on your Power Pages site, use JavaScript:
+
+```javascript
+async function fetchResults(searchTerm) {
+  const apiUrl = `/api/search?search=${encodeURIComponent(searchTerm)}`;
+
+  try {
+    const response = await fetch(apiUrl);
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    if (data.error) {
+      console.error("API Error:", data.error);
+    } else {
+      console.log("Results:", data.results);
+      // Display results on the page
+      const resultContainer = document.getElementById("results");
+      resultContainer.innerHTML = data.results
+        .map((result) => `<p>${result.fullname}</p>`)
+        .join("");
+    }
+  } catch (error) {
+    console.error("Fetch Error:", error.message);
+  }
+}
+
+// Example usage:
+fetchResults("John");
+```
+
+Add the JavaScript to your web page or a custom script file to dynamically fetch results and display them on the page.
+
+### Important: Security Considerations
+
+1. **Escape Parameters**: Always sanitize and escape user inputs passed into FetchXML queries to prevent SQL injection-like attacks. Use `| escape` or similar Liquid filters.
+2. **Restrict Access**: Limit the API route to authenticated users using **Web Page Access Control Rules** in Power Pages.
+3. **Validate Inputs**: Add server-side validation to ensure parameters are correctly formatted (e.g., GUID or string).
+
+### Conclusion
+
+By combining Liquid Code, Web Templates, and JavaScript, you can create robust API routes in Power Pages for dynamic data retrieval. With proper security measures in place, your Power Pages site can offer rich, data-driven functionality to users.

@@ -7,21 +7,26 @@ export default defineConfig({
   site: "https://maichopra.github.io/",
   integrations: [
     starlight({
-      title: "My Docs",
+      title: "J.A.C.K Blog",
       social: {
-        github: "https://github.com/withastro/starlight",
+        github: "https://github.com/maichopra",
       },
       sidebar: [
         {
+          label: "Articles",
+          autogenerate: { directory: "articles" },
+        },
+        {
           label: "Guides",
-          items: [
-            // Each item here is one entry in the navigation menu.
-            { label: "Example Guide", slug: "guides/example" },
-          ],
+          autogenerate: { directory: "guides" },
         },
         {
           label: "Reference",
           autogenerate: { directory: "reference" },
+        },
+        {
+          label: "Tags",
+          link: "/tags/",
         },
       ],
     }),

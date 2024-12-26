@@ -1,0 +1,85 @@
+---
+import { tagTypes } from "../../library/types";
+import { getSplitDocsByTags, generateHeadings } from "../../library/content";
+import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
+
+import { Aside } from "@astrojs/starlight/components";
+import { LinkCard, CardGrid } from "@astrojs/starlight/components";
+
+// Fetch all available tags at build time
+export async function getStaticPaths() {
+  return tagTypes.map((tag) => ({
+    params: { tag },
+  }));
+}
+
+// Retrieve the tag(s) from the route
+const { tag } = Astro.params as { tag: string };
+
+// Validate the tag and cast to TagType
+if (!tagTypes.includes(tag as (typeof tagTypes)[number])) {
+  throw new Error(`Invalid tag: ${tag}`);
+}
+const validTag = tag as (typeof tagTypes)[number];
+
+// Fetch the articles, guides, and references with the matching tag
+const frontMatterTitle = "Articles tagged with: " + tag;
+const splitDocs = await getSplitDocsByTags([validTag]);
+const headingProps = generateHeadings(splitDocs);
+
+const noDocs =
+  splitDocs.articles.length == 0 &&
+  splitDocs.guides.length == 0 &&
+  splitDocs.reference.length == 0;
+---
+
+<StarlightPage
+  frontmatter={{
+    title: frontMatterTitle,
+    prev: { link: "/tags/", label: "Tags" },
+    tableOfContents: false,
+  }}
+  ,
+  headings={headingProps}
+>
+  {
+    noDocs && (
+      <Aside title="No Pages available">
+        Please check back later to see if any new pages have been added, or
+        reach out to me via the Github issues.
+      </Aside>
+    )
+  }
+  {
+    splitDocs.articles.length > 0 && (
+      <div id="articles">
+        <h2>Articles</h2>
+        {splitDocs.articles.map((article) => (
+          <LinkCard title={article.data.title} href={"/" + article.id} />
+        ))}
+      </div>
+    )
+  }
+
+  {
+    splitDocs.guides.length > 0 && (
+      <div id="guides">
+        <h2>Guides</h2>
+        {splitDocs.guides.map((article) => (
+          <LinkCard title={article.data.title} href={"/" + article.id} />
+        ))}
+      </div>
+    )
+  }
+
+  {
+    splitDocs.reference.length > 0 && (
+      <div id="reference">
+        <h2>Reference</h2>{" "}
+        {splitDocs.reference.map((article) => (
+          <LinkCard title={article.data.title} href={"/" + article.id} />
+        ))}
+      </div>
+    )
+  }
+</StarlightPage>

@@ -1,0 +1,75 @@
+---
+title: Structuring work items in Azure DevOps
+description: Lets discuss 2 ways to manage work items in Azure DevOps using Epics, Features, and Stories for effective product development and maintenance.
+lastUpdated: 2024-12-26
+tags: ["Functional"]
+---
+
+import { Badge } from "@astrojs/starlight/components";
+
+<Badge text="Functional" variant="default" />
+
+Managing work items in **Azure DevOps** is a crucial skill for Business Analysts (BAs) and Scrum Masters. This guide explores two approaches to structuring Epics, Features, and Stories, focusing on aligning them with your product and development lifecycle.
+
+### Understanding the Structure
+
+1. **Epics**: Represent broad initiatives or product lines.
+2. **Features**: Represent specific functionalities, timeboxed to a single release or Program Increment (PI).
+3. **Stories**: Represent granular tasks or requirements that contribute to the feature.
+
+This hierarchy enables clear traceability from strategic goals to individual tasks.
+
+### Approach 1: Epics as Products
+
+In this approach, **Epics** correspond to the products you manage, while **Features** are specific enhancements or functionalities added during a PI or release. **Stories** break down those Features into implementable tasks.
+
+#### Example: Business-as-Usual (BAU) System
+
+Imagine you manage a Customer Relationship Management (CRM) system that requires regular updates. A new data element, "Preferred Communication Channel," needs to be introduced. Here's how you can structure it:
+
+- **Epic**: CRM System
+- **Feature**: Add Preferred Communication Channel
+  - **Story** 1: Update the database schema to include the new field.
+  - **Story** 2: Update the front-end form to display the new field.
+  - **Story** 3: Modify reports to include the new data.
+  - **Story** 4: Test the end-to-end implementation.
+
+This approach aligns work items with product ownership, ensuring the Epic remains a consistent reference for all BAU and development activities related to the CRM.
+
+### Approach 2: Epics for Initiatives
+
+Alternatively, you can structure **Epics** around initiatives like "Add New Fields" and create **Features** for specific fields. Stories then map to implementing the field across different products.
+
+#### Example: Introducing New Data Fields
+
+For a program introducing multiple new fields across systems, structure the work as follows:
+
+- **Epic**: Add New Fields
+  - **Feature**: Preferred Communication Channel
+    - **Story** 1: Add the field to the CRM system.
+    - **Story** 2: Add the field to the HR system.
+    - **Story** 3: Add the field to the Marketing system.
+  - **Feature**: Customer Classification Field
+    - **Story** 1: Add the field to the CRM system.
+    - **Story** 2: Add the field to the Sales platform.
+
+This approach focuses on initiatives rather than individual products, enabling cross-product visibility and coordination.
+
+### Choosing the Right Approach
+
+Both methods have advantages:
+
+- **Epics as Products**: Ideal for BAU scenarios where product ownership drives work item structuring. Provides clear traceability and product focus.
+- **Epics for Initiatives**: Best for cross-product initiatives or when managing large-scale changes like compliance or data standardization projects. Enables centralized management of related changes.
+
+### Best Practices for Managing Epics, Features, and Stories
+
+1. **Timebox Features**: Ensure Features align with a single release or PI for predictability.
+2. **Maintain Hierarchy**: Link Stories to Features and Features to Epics for clear traceability.
+3. **Use Tags and Areas**: Use Azure DevOps tags and area paths to manage product-specific or initiative-specific work.
+4. **Regular Refinement**: Continuously groom the backlog to ensure Stories remain relevant and actionable.
+5. **Monitor Progress**: Use dashboards and burndown charts to track Epic and Feature progress.
+
+### Conclusion
+
+Choosing the right approach to managing Epics, Features, and Stories depends on your organization’s structure and priorities. Whether focusing on products or initiatives, maintaining clarity and alignment in Azure DevOps ensures successful planning and execution. By adopting best practices, BAs and Scrum Masters can streamline workflows and deliver value consistently.

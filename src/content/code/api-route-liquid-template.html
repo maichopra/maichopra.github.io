@@ -1,0 +1,18 @@
+{% assign searchTerm = request.params['search'] | url_decode %} {% if searchTerm
+%} {% capture fetchXml %}
+<fetch top="10">
+  <entity name="contact">
+    <attribute name="fullname" />
+    <filter>
+      <condition
+        attribute="fullname"
+        operator="like"
+        value="%{{ searchTerm | escape }}%"
+      />
+    </filter>
+  </entity>
+</fetch>
+{% endcapture %} {% fetchxml contacts fetchXml %} { "results": [ {% for contact
+in contacts.entities %} { "fullname": "{{ contact.fullname | json_escape }}" }{%
+if forloop.last == false %},{% endif %} {% endfor %} ] } {% else %} { "error":
+"Missing or invalid search term" } {% endif %}

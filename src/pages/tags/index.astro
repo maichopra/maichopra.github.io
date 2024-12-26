@@ -1,0 +1,15 @@
+---
+import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
+import { tagTypes } from "../../library/types";
+import { LinkCard, CardGrid } from "@astrojs/starlight/components";
+---
+
+<StarlightPage frontmatter={{ title: "Tags", tableOfContents: false }}>
+  <CardGrid>
+    {
+      tagTypes.map((tag) => (
+        <LinkCard title={tag} href={`/tags/${encodeURIComponent(tag)}`} />
+      ))
+    }
+  </CardGrid>
+</StarlightPage>
