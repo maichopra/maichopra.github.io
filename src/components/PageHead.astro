@@ -1,26 +1,36 @@
 ---
 import type { Props } from "@astrojs/starlight/props";
 import Default from "@astrojs/starlight/components/PageTitle.astro";
-import { Badge } from "@astrojs/starlight/components";
-
+import LinkTag from "./LinkTag.astro";
 const { tags } = Astro.props.entry.data;
 
-const tagVariants: Record<
-  string,
-  "note" | "danger" | "success" | "caution" | "tip" | "default"
-> = {
-  Dataverse: "success",
-  "Power Pages": "tip",
-  "Power BI": "caution",
-};
+import { Image } from "astro:assets";
+import assetIcon from "../assets/dv-icon.png";
 ---
 
-<Default {...Astro.props}>
-  <slot />
-</Default>
+<div class="title">
+  <Image src={assetIcon} alt="Power Platform Icon" height="40" />
+
+  <Default {...Astro.props}>
+    <slot />
+  </Default>
+</div>
+
 {
   tags != null &&
-    tags.map((tag: string) => (
-      <Badge text={tag} variant={tagVariants[tag] || "default"} />
-    ))
+    tags.map((tag: string) => <LinkTag tag={tag} href={"/tags/" + tag + "/"} />)
 }
+
+<style>
+  .title {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1em;
+    padding-bottom: 2em;
+  }
+
+  img {
+    margin-top: 1rem;
+  }
+</style>

@@ -8,6 +8,9 @@ export default defineConfig({
   integrations: [
     starlight({
       title: "J.A.C.K Blog",
+      logo: {
+        src: "./src/assets/jack-icon.png",
+      },
       components: {
         // Override the default `PageTitle` component.
         PageTitle: "./src/components/PageHead.astro",

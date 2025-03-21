@@ -1,9 +1,11 @@
 ---
 title: Structuring work items in Azure DevOps
 description: Lets discuss 2 ways to manage work items in Azure DevOps using Epics, Features, and Stories for effective product development and maintenance.
-lastUpdated: 2024-12-26
+lastUpdated: 2025-01-08
 tags: ["Functional"]
 ---
+
+import { FileTree } from "@astrojs/starlight/components";
 
 Managing work items in **Azure DevOps** is a crucial skill for Business Analysts (BAs) and Scrum Masters. This guide explores two approaches to structuring Epics, Features, and Stories, focusing on aligning them with your product and development lifecycle.
 
@@ -19,41 +21,52 @@ This hierarchy enables clear traceability from strategic goals to individual tas
 
 In this approach, **Epics** correspond to the products you manage, while **Features** are specific enhancements or functionalities added during a PI or release. **Stories** break down those Features into implementable tasks.
 
-### Example: Business-as-Usual (BAU) System
+### Example:
 
-Imagine you manage a Customer Relationship Management (CRM) system that requires regular updates. A new data element, "Preferred Communication Channel," needs to be introduced. Here's how you can structure it:
+Imagine you manage a Customer Relationship Management (CRM) system and a Reporting platform that requires regular updates.
+A new data element, "Preferred Communication Channel," needs to be introduced. Here's how you can structure it:
 
-- **Epic**: CRM System
-- **Feature**: Add Preferred Communication Channel
-  - **Story** 1: Update the database schema to include the new field.
-  - **Story** 2: Update the front-end form to display the new field.
-  - **Story** 3: Modify reports to include the new data.
-  - **Story** 4: Test the end-to-end implementation.
+<FileTree>
 
-This approach aligns work items with product ownership, ensuring the Epic remains a consistent reference for all BAU and development activities related to the CRM.
+- EPIC: CRM System
+  - FEATURE: Add new fields PIX.Y
+    - Story: Add Preferred Communication Channel to CRM Form
+    - ...
+- EPIC: Reporting System
+  - FEATURE: Add new fields PIX.Y
+    - Story: Add Preferred Communication Channel to Dashboard
+    - ...
+
+</FileTree>
+
+This approach aligns work items with product ownership, ensuring the Epic remains a consistent reference for all BAU and development activities related to the CRM and Reporting platform. It also allows you to group all the specific changes related to an individual component in one place, thus allowing for effeciencies by completing the all the work in one go.
 
 ## Approach 2: Epics for Initiatives
 
 Alternatively, you can structure **Epics** around initiatives like "Add New Fields" and create **Features** for specific fields. Stories then map to implementing the field across different products.
 
-### Example: Introducing New Data Fields
+### Example:
 
 For a program introducing multiple new fields across systems, structure the work as follows:
 
-- **Epic**: Add New Fields
-  - **Feature**: Preferred Communication Channel
-    - **Story** 1: Add the field to the CRM system.
-    - **Story** 2: Add the field to the HR system.
-    - **Story** 3: Add the field to the Marketing system.
-  - **Feature**: Customer Classification Field
-    - **Story** 1: Add the field to the CRM system.
-    - **Story** 2: Add the field to the Sales platform.
+<FileTree>
 
-This approach focuses on initiatives rather than individual products, enabling cross-product visibility and coordination.
+- Epic: Add New Fields
+  - Feature: Preferred Communication Channel
+    - Story: Add the field to the CRM system.
+    - Story: Add the field to the Reporting platform.
+    - ...
+  - Feature: Customer Classification Field
+    - Story: Add the field to the CRM system.
+    - ...
+
+</FileTree>
+
+This approach focuses on initiatives rather than individual products, enabling cross-product visibility and coordination. Additionally, you can ensure that all related tasks are complete for each new element as all related work items are grouped under the single Feature.
 
 ## Choosing the Right Approach
 
-Both methods have advantages:
+Firstly, there is **no right approach** when it comes to structuring work items in DevOps. Rather it is a matter of the team's preference, as both methods have advantages:
 
 - **Epics as Products**: Ideal for BAU scenarios where product ownership drives work item structuring. Provides clear traceability and product focus.
 - **Epics for Initiatives**: Best for cross-product initiatives or when managing large-scale changes like compliance or data standardization projects. Enables centralized management of related changes.
@@ -69,3 +82,7 @@ Both methods have advantages:
 ## Conclusion
 
 Choosing the right approach to managing Epics, Features, and Stories depends on your organization’s structure and priorities. Whether focusing on products or initiatives, maintaining clarity and alignment in Azure DevOps ensures successful planning and execution. By adopting best practices, BAs and Scrum Masters can streamline workflows and deliver value consistently.
+
+import Disclaimer from "../../../components/Disclaimer.astro";
+
+<Disclaimer />

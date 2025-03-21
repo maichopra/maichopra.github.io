@@ -18,7 +18,7 @@ tags: ["Dataverse"]
 1. **Authenticate to your Dataverse environment:**
 
    ```bash
-   pac auth create --url https://your-org.crm.dynamics.com
+   pac auth create --environment https://your-org.crm.dynamics.com
    ```
 
 2. **Export the unmanaged solution:**
@@ -28,10 +28,11 @@ tags: ["Dataverse"]
    ```
 
    - Replace `<SolutionName>` with the name of your solution.
+     - Remember to use the **name** of the solution and not the display name.
    - The `--managed false` flag ensures that the solution is exported as unmanaged.
 
 3. **Verify the solution file:**
-   After export, you should see a ZIP file named `<SolutionName>_Unmanaged.zip` in the specified path.
+   After export, you should see a ZIP file named `<SolutionName>.zip` in the specified path.
 
 ### Exporting a Managed Solution
 
@@ -48,7 +49,7 @@ tags: ["Dataverse"]
    - The `--managed true` flag ensures that the solution is exported as managed.
 
 3. **Verify the solution file:**
-   After export, you should see a ZIP file named `<SolutionName>_Managed.zip` in the specified path.
+   After export, you should see a ZIP file named `<SolutionName>_managed.zip` in the specified path.
 
 ## Unpacking the Solution
 
@@ -63,7 +64,7 @@ To enable version control or inspect the contents of the solution, you can unpac
 2. **Unpack the solution:**
 
    ```bash
-   pac solution unpack --zipfile "./solutions/<SolutionName>_Unmanaged.zip" --folder "./unpacked-solution"
+   pac solution unpack --zipfile "./solutions/<SolutionName>.zip" --folder "./unpacked-solution"
    ```
 
    - Replace `<SolutionName>` with the name of your solution.
@@ -78,7 +79,7 @@ To enable version control or inspect the contents of the solution, you can unpac
 - **Authenticate to a new environment:**
 
   ```bash
-  pac auth create --url https://new-org.crm.dynamics.com
+  pac auth create --environment https://new-org.crm.dynamics.com
   ```
 
 - **List available solutions in the environment:**
@@ -107,3 +108,7 @@ To enable version control or inspect the contents of the solution, you can unpac
 ## References
 
 - [PAC CLI Documentation](https://learn.microsoft.com/en-us/power-platform/developer/cli/introduction)
+
+import Disclaimer from "../../../components/Disclaimer.astro";
+
+<Disclaimer />

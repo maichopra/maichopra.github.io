@@ -1,0 +1,39 @@
+---
+import { Badge } from "@astrojs/starlight/components";
+
+const tagVariants: Record<
+  string,
+  "note" | "danger" | "success" | "caution" | "tip" | "default"
+> = {
+  Dataverse: "success",
+  "Power Pages": "tip",
+  "Power BI": "caution",
+};
+
+interface Props {
+  tag: string;
+  href: string;
+}
+
+const { tag, href } = Astro.props;
+---
+
+<a href={href}>
+  <Badge text={tag} variant={tagVariants[tag] || "default"} />
+</a>
+
+<style>
+  a {
+    text-decoration: none; /* Removes underline */
+    margin: 0; /* Removes any margins between elements */
+    align-items: center; /* Ensures alignment */
+  }
+
+  .sl-badge {
+    margin-right: 0rem; /* Adds spacing between badges */
+  }
+
+  a:last-child .sl-badge {
+    margin-right: 0; /* Removes margin for the last badge */
+  }
+</style>
