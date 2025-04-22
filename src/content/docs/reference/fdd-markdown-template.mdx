@@ -1,0 +1,197 @@
+---
+title: FDD Markdown Template
+description: Example Markdown Template used to capture the Functional Design Documentation (FDD) for an entity.
+tags: ["Functional", "Dataverse"]
+---
+
+## Template
+
+```Markdown
+### Entity Settings
+
+| Name | Logical Name | GUID |
+|------|--------------|------|
+|      |              |      |
+
+### Entity Definition
+
+| Key                                                                   | Value |
+|-----------------------------------------------------------------------|-------|
+| Schema Name                                                           |       |
+| Display Name                                                          |       |
+| Description                                                           |       |
+| Feedback                                                              |       |
+| Notes                                                                 |       |
+| Activities                                                            |       |
+| Connections                                                           |       |
+| Sending Email                                                         |       |
+| Mail Merge                                                            |       |
+| Document Management                                                   |       |
+| OneNote Integration                                                   |       |
+| Access Teams                                                          |       |
+| Queues                                                                |       |
+| Knowledge Management                                                  |       |
+| Enable for SLA                                                        |       |
+| Allow Quick Create                                                    |       |
+| Duplicate Detection                                                   |       |
+| Auditing                                                              |       |
+| Change Tracking                                                       |       |
+| Single record auditing, Log a record when opened                      |       |
+| Multiple record auditing, Log all records displayed on an opened page |       |
+
+### Entity Attributes
+
+| Schema Name | Display Name | Type | Field Requirement | Option set values | Audit Status | Description | Notes |
+|-------------|--------------|------|-------------------|-------------------|--------------|-------------|-------|
+|             |              |      |                   |                   |              |             |       |
+
+
+
+### Entity Views
+
+| View Name | Query ID | View Columns | Filter Criteria | Sort By | Description |
+|-----------|----------|--------------|-----------------|---------|-------------|
+|           |          |              |                 |         |             |
+
+
+### Entity Forms
+
+| Name | Entity Logical Name | Type | Unique Name | Description | Form ID |   |
+|------|---------------------|------|-------------|-------------|---------|---|
+|      |                     |      |             |             |         |   |
+
+
+### Entity Relationships
+
+### ERD
+
+`<ERD IMAGE>`
+
+### Many to One
+
+| Schema Name | Custom Relationship | Relationship Type | Referenced Attribute | Referenced Entity | Referencing Attribute | Referencing Entity |
+|-------------|---------------------|-------------------|----------------------|-------------------|-----------------------|--------------------|
+|             |                     |                   |                      |                   |                       |                    |
+
+### One to Many
+
+| Schema Name | Custom Relationship | Relationship Type | Referenced Attribute | Referenced Entity | Referencing Attribute | Referencing Entity |
+|-------------|---------------------|-------------------|----------------------|-------------------|-----------------------|--------------------|
+|             |                     |                   |                      |                   |                       |                    |
+
+### Entity Automations
+
+### Power Automates
+
+| Name | Type | Run As | Is Managed | Trigger Message | Scope | Filtering Attributes | Filter Expression | Dependent Entities | Status |
+|------|------|--------|------------|-----------------|-------|----------------------|-------------------|--------------------|--------|
+|      |      |        |            |                 |       |                      |                   |                    |        |
+
+### Plugins
+
+| Assembly Name | Step Name | Stage | Message | Execution Order | Execution Mode | Status | Description | Filtering Attributes |
+|---------------|-----------|-------|---------|-----------------|----------------|--------|-------------|----------------------|
+
+### Processes
+
+| Name | Type | Execution | Run As | Is Managed | Is Child | On Demand | On Create | On Delete | Attribute Triggers | Status |
+|------|------|-----------|--------|------------|----------|-----------|-----------|-----------|--------------------|--------|
+|      |      |           |        |            |          |           |           |           |                    |        |
+
+
+```
+
+## Example output
+
+### Entity Settings
+
+| Name | Logical Name | GUID |
+| ---- | ------------ | ---- |
+|      |              |      |
+
+### Entity Definition
+
+| Key                                                                   | Value |
+| --------------------------------------------------------------------- | ----- |
+| Schema Name                                                           |       |
+| Display Name                                                          |       |
+| Description                                                           |       |
+| Feedback                                                              |       |
+| Notes                                                                 |       |
+| Activities                                                            |       |
+| Connections                                                           |       |
+| Sending Email                                                         |       |
+| Mail Merge                                                            |       |
+| Document Management                                                   |       |
+| OneNote Integration                                                   |       |
+| Access Teams                                                          |       |
+| Queues                                                                |       |
+| Knowledge Management                                                  |       |
+| Enable for SLA                                                        |       |
+| Allow Quick Create                                                    |       |
+| Duplicate Detection                                                   |       |
+| Auditing                                                              |       |
+| Change Tracking                                                       |       |
+| Single record auditing, Log a record when opened                      |       |
+| Multiple record auditing, Log all records displayed on an opened page |       |
+
+### Entity Attributes
+
+| Schema Name | Display Name | Type | Field Requirement | Option set values | Audit Status | Description | Notes |
+| ----------- | ------------ | ---- | ----------------- | ----------------- | ------------ | ----------- | ----- |
+|             |              |      |                   |                   |              |             |       |
+
+### Entity Views
+
+| View Name | Query ID | View Columns | Filter Criteria | Sort By | Description |
+| --------- | -------- | ------------ | --------------- | ------- | ----------- |
+|           |          |              |                 |         |             |
+
+### Entity Forms
+
+| Name | Entity Logical Name | Type | Unique Name | Description | Form ID |     |
+| ---- | ------------------- | ---- | ----------- | ----------- | ------- | --- |
+|      |                     |      |             |             |         |     |
+
+### Entity Relationships
+
+### ERD
+
+`<ERD IMAGE>`
+
+### Many to One
+
+| Schema Name | Custom Relationship | Relationship Type | Referenced Attribute | Referenced Entity | Referencing Attribute | Referencing Entity |
+| ----------- | ------------------- | ----------------- | -------------------- | ----------------- | --------------------- | ------------------ |
+|             |                     |                   |                      |                   |                       |                    |
+
+### One to Many
+
+| Schema Name | Custom Relationship | Relationship Type | Referenced Attribute | Referenced Entity | Referencing Attribute | Referencing Entity |
+| ----------- | ------------------- | ----------------- | -------------------- | ----------------- | --------------------- | ------------------ |
+|             |                     |                   |                      |                   |                       |                    |
+
+### Entity Automations
+
+### Power Automates
+
+| Name | Type | Run As | Is Managed | Trigger Message | Scope | Filtering Attributes | Filter Expression | Dependent Entities | Status |
+| ---- | ---- | ------ | ---------- | --------------- | ----- | -------------------- | ----------------- | ------------------ | ------ |
+|      |      |        |            |                 |       |                      |                   |                    |        |
+
+### Plugins
+
+| Assembly Name | Step Name | Stage | Message | Execution Order | Execution Mode | Status | Description | Filtering Attributes |
+| ------------- | --------- | ----- | ------- | --------------- | -------------- | ------ | ----------- | -------------------- |
+
+### Processes
+
+| Name | Type | Execution | Run As | Is Managed | Is Child | On Demand | On Create | On Delete | Attribute Triggers | Status |
+| ---- | ---- | --------- | ------ | ---------- | -------- | --------- | --------- | --------- | ------------------ | ------ |
+|      |      |           |        |            |          |           |           |           |                    |        |
+
+---
+
+import Disclaimer from "../../../components/Disclaimer.astro";
+
+<Disclaimer />

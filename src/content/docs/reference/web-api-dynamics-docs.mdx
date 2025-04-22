@@ -1,0 +1,122 @@
+---
+title: Web-API for Documentation
+description: Web-API endpoints for Dynamics documentation
+lastUpdated: 2025-03-21
+tags: ["Dataverse", "Dynamics 365"]
+---
+
+## Introduction
+
+The Dynamics 365 Web API allows us to retrieve metadata. When documenting a Dynamics 365 system, the Web API can be used to extract entity schemas, relationships, and attributes to maintain up-to-date technical documentation.
+
+## Connecting to the Dynamics 365 Web API
+
+To access the Web API, you need can follow the [authenticating with Postman](/guides/getting-started-with-postman) guide.
+
+## Base URL
+
+The base URL format for the Web API is:
+
+```http
+https://<org>.crm6.dynamics.com/api/data/v9.2/
+```
+
+## Retrieving Entity Metadata
+
+To document entity schemas, query the `EntityDefinitions` endpoint:
+
+```http
+GET https://<org>.api.crm.dynamics.com/api/data/v9.2/EntityDefinitions
+Authorization: Bearer <access_token>
+Accept: application/json
+```
+
+This returns metadata for all entities, including their logical names, display names, and primary keys.
+
+To retrieve metadata for a specific entity:
+
+```http
+GET https://<org>.api.crm.dynamics.com/api/data/v9.2/EntityDefinitions(LogicalName='account')
+```
+
+## Extracting Attributes and Relationships
+
+### Listing Attributes for an Entity
+
+```http
+GET https://<org>.api.crm.dynamics.com/api/data/v9.2/EntityDefinitions(LogicalName='account')/Attributes
+```
+
+This provides details about fields such as data type, required status, and default values.
+
+### Retrieving Relationships
+
+Fetch entity relationships using:
+
+```http
+GET https://<org>.api.crm.dynamics.com/api/data/v9.2/EntityDefinitions(LogicalName='account')/OneToManyRelationships
+```
+
+This helps document associations between entities.
+
+## Retrieving Entity Forms
+
+Fetch entity forms using:
+
+```http
+GET https://<org>.api.crm.dynamics.com/api/data/v9.2/systemforms?$filter=objecttypecode eq 'account'
+```
+
+You can get a specific form by filtering on the `uniquename` of the form.
+
+```http
+GET https://<org>.api.crm.dynamics.com/api/data/v9.2/systemforms?$filter=objecttypecode eq 'account' and uniquename eq 'myAccountForm'
+```
+
+## Retrieving Entity Views
+
+Fetch entity views using:
+
+```http
+GET https://<org>.api.crm.dynamics.com/api/data/v9.2/savedqueries?$select=name,layoutxml,returnedtypecode,fetchxml,description&$filter=returnedtypecode eq 'account'
+```
+
+By parsing the `fetchxml` you can reconstruct the view. You may also need to parse the `layoutxml`.
+
+## Retrieving Automations
+
+### Power Automate Flows
+
+Fetch Power Automate flows using:
+
+```http
+GET https://<org>.api.crm.dynamics.com/api/data/v9.2/workflows?$filter=category eq 5 and statecode eq 1
+```
+
+### Classic workflows
+
+Fetch Classic Workflows using:
+
+```http
+GET https://<org>.api.crm.dynamics.com/api/data/v9.2/workflows?$filter=category eq 5 and statecode eq 1
+```
+
+### Plugins
+
+Fetch Plugins using:
+
+```http
+GET https://<org>.api.crm.dynamics.com/api/data/v9.2/sdkmessageprocessingsteps?$select=name,description,impersonatinguserid,supporteddeployment,statuscode,statecode,sdkmessagefilterid,sdkmessageid,filteringattributes,configuration,asyncautodelete
+```
+
+## Conclusion
+
+To automate documentation, you can build tools that output structured documentation based on the API responses for:
+
+- Entity structures
+- Field definitions
+- Relationships
+
+import Disclaimer from "../../../components/Disclaimer.astro";
+
+<Disclaimer />
